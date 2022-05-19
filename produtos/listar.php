@@ -1,3 +1,8 @@
+<?php
+require"../includes/funcoes-produtos.php";
+$listaDeProdutos = lerProdutos($conexao)
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -22,11 +27,16 @@
 
 
     <ul>
-        <li><b>Nome:</b>  </li>
-        <li><b>Preço:</b>  </li>
-        <li><b>Quantidade:</b>  </li>
-        <li><b>Descrição:</b>   </li>
-        <li><b>Fabricante:</b>  </li>
+<?php foreach($listaDeProdutos as $produto){ ?>
+        <li><b>Nome:</b><?=$produto['nome']?>  </li>
+        <li><b>Preço:</b> <?=$produto['preco']?> </li>
+        <li><b>Quantidade:</b><?=$produto['quantidade']?>  </li>
+        <li><b>Descrição:</b><?=$produto['descricao']?>   </li>
+        <li><b>Fabricante:</b><?=$produto['fabricante_id']?>  </li>
+        <hr>
+<?php
+}
+?>        
     </ul>
 
 </div>
