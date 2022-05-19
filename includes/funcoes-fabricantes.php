@@ -25,7 +25,7 @@ function lerFabricantes($conexao){
 
 // var_dump(lerFabricantes($conexao));
 
-
+// Inicio 
 function inserirFabricante($conexao, $nome){
     // 1) Montar String do comando SQL 
     $sql = "INSERT INTO fabricantes(nome) VALUES('$nome')";
@@ -34,12 +34,36 @@ function inserirFabricante($conexao, $nome){
 
 }
 
-function excluirFabricante($conexao, $nome){
-    $sql = "DELETE FROM fabricantes WHERE nome = ('$nome')";
+//Fim Função inserirfabricante
+
+// Inicio função excluirFabricante
+function excluirFabricante($conexao, $id){
+    $sql = "DELETE FROM fabricantes WHERE id = $id";
+
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }
 
-function atualizarFabricante($conexao, $nome){
-    $sql = "UPDATE fabricantes SET('$nome')";
+// Fim função excluirFabricante
+
+
+// Inicio função atualizarFabricantes
+function atualizarFabricantes($conexao, $id, $nome){
+    $sql = "UPDATE fabricantes SET nome = '$nome' WHERE id = $id";
+    // UPDATE, DELECT INSERT não precisa de retorno pois nao retorna dado nenhum
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+
+}
+
+// Fim função atualizarFabricantes
+
+function lerUmFabricante($conexao, $id){
+    $sql = "SELECT id, nome FROM fabricantes WHERE id = $id";
+    
+    $query = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
+    //Retornando para fora da função o resultado como array assoc.
+    return mysqli_fetch_assoc($query);
+
+
 }
