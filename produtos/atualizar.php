@@ -1,3 +1,30 @@
+<?php
+    require "../includes/funcoes-fabricantes.php";
+    require "../includes/funcoes-produtos.php";
+    $listaDeFabricantes = lerFabricantes($conexao);
+
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+    $dados = lerUmProduto($conexao, $id);
+
+    if( isset($_POST ['atualizar'])){
+        
+        $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+        $fabricanteID = filter_input(INPUT_POST, 'fabricante', FILTER_SANITIZE_NUMBER_INT);
+        $preco = filter_input(INPUT_POST,'preco', FILTER_SANITIZE_SPECIAL_CHARS);    
+        $quantidade = filter_input(INPUT_POST,'quantidade', FILTER_SANITIZE_SPECIAL_CHARS);
+        $descricao = filter_input(INPUT_POST,'descricao', FILTER_SANITIZE_SPECIAL_CHARS);
+        
+        
+        atualizarProduto($conexao,$id, $nome, $preco, $quantidade, $descricao, $fabricanteID);
+
+        header("location:listar.php");
+
+    }
+    
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -19,30 +46,38 @@
     
     <form action="" method="post"> 
         
-        <p><label for="nome">Nome:</label>
-	    <input value="" type="text" name="nome" id="nome" required></p>
+        <p>
+            <label for="nome">Nome:</label>
+	        <input value="<?=$dados['nome']?>" type="text" name="nome" id="nome" required>
+        </p>
 
         <p>
             <label for="fabricante">Fabricante:</label>
             <select name="fabricante" id="fabricante" required>
                 <option value=""></option>
                 
-                <option value="">
-                
+                <?php foreach($listaDeFabricantes as $fabricante){?>
+                 <option 
+                 <?php if($dados['fabricante_id'] == $fabricante['id']){
+                     echo "selected";
+                 }?>
+                   value="<?=$fabricante['id']?>">
+                    <?=$fabricante['nome']?>
                 </option>
+                <?php } ?>
             
             </select>
         </p>
 
 
         <p><label for="preco">Preço:</label>
-	    <input value="" type="number" name="preco" id="preco" min="0" max="10000" step="0.01" required></p>
+	    <input value="<?=$dados['preco']?>" type="number" name="preco" id="preco" min="0" max="10000" step="0.01" required></p>
 
         <p><label for="quantidade">Quantidade:</label>
-	    <input value="" type="number" name="quantidade" id="quantidade" min="0" max="50" step="1" required></p>
+	    <input value="<?=$dados['quantidade']?>" type="number" name="quantidade" id="quantidade" min="0" max="50" step="1" required></p>
         
 	    <p><label for="descricao">Descrição:</label> <br>
-	    <textarea name="descricao" id="descricao" rows="3" cols="40" maxlength="500" required></textarea>
+	    <textarea value="" name="descricao" id="descricao" rows="3" cols="40" maxlength="500" required><?=$dados['descricao']?></textarea>
         </p>
 	    
 

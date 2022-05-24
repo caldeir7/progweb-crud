@@ -1,3 +1,29 @@
+<?php
+    require "../includes/funcoes-fabricantes.php";
+    $listaDeFabricantes = lerFabricantes($conexao);
+
+    if( isset($_POST ['inserir'])){
+        require "../includes/funcoes-produtos.php";
+        $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $fabricanteID = filter_input(INPUT_POST, 'fabricante', FILTER_SANITIZE_NUMBER_INT);
+
+        $preco = filter_input(INPUT_POST,'preco', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        //filtros para campos numericos e com campos decimais  
+
+        $quantidade = filter_input(INPUT_POST,'quantidade', FILTER_SANITIZE_NUMBER_FLOAT);
+
+        $descricao = filter_input(INPUT_POST,'descricao', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        
+        
+        inserirProduto($conexao, $nome, $preco, $quantidade, $descricao,$fabricanteID);
+
+        header("location:listar.php");
+
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -26,14 +52,16 @@
 
         <p>
             <label for="fabricante">Fabricante:</label>
+            
             <select name="fabricante" id="fabricante" required>
-                <option value=""></option>
-
-                
-                
+                    <option value=""></option>
+                    
+                <?php foreach($listaDeFabricantes as $fabricante){?>
+                 <option value="<?=$fabricante['id']?>"><?=$fabricante['nome']?></option>
+                <?php } ?>
             </select>
+           
         </p>
-
         <p>
             <label for="preco">Preço:</label>
 	        <input type="number" name="preco" id="preco" min="0" max="10000" step="0.01" required>

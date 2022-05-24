@@ -1,7 +1,9 @@
 <?php
     require "conecta.php";
 function lerProdutos($conexao){
-    $sql = 'SELECT id,nome,preco,quantidade,descricao, fabricante_id FROM produtos ORDER BY nome INNER JOIN fabricantes  ON produtos.fabricante_id = fabricantes.nome';
+    // $sql = 'SELECT id,nome,preco,quantidade,descricao, fabricante_id FROM produtos ORDER BY nome';
+
+    $sql = 'SELECT produtos.id, produtos.nome AS produto, produtos.preco, produtos.quantidade, produtos.descricao, fabricantes.nome AS fabricante FROM produtos INNER JOIN fabricantes ON fabricante_id = fabricantes.id ORDER BY produto';
 
     $query = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
@@ -14,12 +16,10 @@ function lerProdutos($conexao){
     return $produtos;
 }   
 
-
-
 // Inicio função inserirProduto
-function inserirProduto($conexao, $nome){
+function inserirProduto($conexao, $nome, $preco, $quantidade, $descricao, $fabricanteID){
     // 1) Montar String do comando SQL 
-    $sql = "";
+    $sql = "INSERT INTO produtos(nome, preco,quantidade,descricao, fabricante_id) VALUES('$nome', $preco, $quantidade, '$descricao', $fabricanteID)";
     // 2) Executa o comando
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
@@ -29,7 +29,7 @@ function inserirProduto($conexao, $nome){
 
 // Inicio função excluirFabricante
 function excluirProduto($conexao, $id){
-    $sql = "";
+    $sql = "DELETE FROM produtos WHERE id = '$id' ";
 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }
@@ -38,8 +38,8 @@ function excluirProduto($conexao, $id){
 
 
 // Inicio função atualizarProduto
-function atualizarProduto($conexao, $id, $nome){
-    $sql = "";
+function atualizarProduto($conexao, $id, $nome ,$preco, $quantidade, $descricao, $fabricanteID){
+    $sql = "UPDATE produtos SET nome  = '$nome', preco = '$preco', quantidade = '$quantidade', descricao = '$descricao', fabricante_id = '$fabricanteID' FROM produtos  WHERE id = '$id' ";
     // UPDATE, DELECT INSERT não precisa de retorno pois nao retorna dado nenhum
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
@@ -50,7 +50,7 @@ function atualizarProduto($conexao, $id, $nome){
 
 //Inicio lerUmProduto
 function lerUmProduto($conexao, $id){
-    $sql = "";
+    $sql = "SELECT id, nome, preco, quantidade, descricao, fabricante_id FROM produtos WHERE id = '$id'";
     
     $query = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 

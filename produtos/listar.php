@@ -1,6 +1,6 @@
 <?php
 require"../includes/funcoes-produtos.php";
-$listaDeProdutos = lerProdutos($conexao)
+$listaDeProdutos = lerProdutos($conexao);
 ?>
 
 <!DOCTYPE html>
@@ -25,19 +25,22 @@ $listaDeProdutos = lerProdutos($conexao)
 
     <hr>
 
-
-    <ul>
 <?php foreach($listaDeProdutos as $produto){ ?>
-        <li><b>Nome:</b><?=$produto['nome']?>  </li>
-        <li><b>Preço:</b> <?=$produto['preco']?> </li>
-        <li><b>Quantidade:</b><?=$produto['quantidade']?>  </li>
-        <li><b>Descrição:</b><?=$produto['descricao']?>   </li>
-        <li><b>Fabricante:</b><?=$produto['fabricante_id']?>  </li>
-        <hr>
+    
+    <ul>
+        <li><b>Nome:</b> <?=$produto['produto']?>  </li>
+        <li><b>Preço:</b> R$: <?=$produto['preco']?> </li>
+        <li><b>Quantidade: </b><?=$produto['quantidade']?>  </li>
+        <li><b>Descrição: </b><?=$produto['descricao']?>   </li>
+        <li><b>Fabricante: </b><?=$produto['fabricante']?>  </li>
+    </ul>
+    <a href="atualizar.php?id=<?=$produto["id"]?>">Atualizar</a>
+    <a href="excluir.php?id=<?=$produto["id"]?>">Excluir</a>
+    <hr>
 <?php
 }
 ?>        
-    </ul>
+    
 
 </div>
 
