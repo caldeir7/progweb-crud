@@ -3,7 +3,7 @@
 function lerProdutos($conexao){
     // $sql = 'SELECT id,nome,preco,quantidade,descricao, fabricante_id FROM produtos ORDER BY nome';
 
-    $sql = 'SELECT produtos.id, produtos.nome AS produto, produtos.preco, produtos.quantidade, produtos.descricao, fabricantes.nome AS fabricante FROM produtos INNER JOIN fabricantes ON fabricante_id = fabricantes.id ORDER BY produto';
+    $sql = "SELECT produtos.id, produtos.nome AS produto, produtos.preco, produtos.quantidade, produtos.descricao, fabricantes.nome AS fabricante FROM produtos INNER JOIN fabricantes ON fabricante_id = fabricantes.id ORDER BY produto";
 
     $query = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
@@ -29,7 +29,7 @@ function inserirProduto($conexao, $nome, $preco, $quantidade, $descricao, $fabri
 
 // Inicio função excluirFabricante
 function excluirProduto($conexao, $id){
-    $sql = "DELETE FROM produtos WHERE id = '$id' ";
+    $sql = "DELETE FROM produtos WHERE id = $id";
 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 }
@@ -38,8 +38,8 @@ function excluirProduto($conexao, $id){
 
 
 // Inicio função atualizarProduto
-function atualizarProduto($conexao, $id, $nome ,$preco, $quantidade, $descricao, $fabricanteID){
-    $sql = "UPDATE produtos SET nome  = '$nome', preco = '$preco', quantidade = '$quantidade', descricao = '$descricao', fabricante_id = '$fabricanteID' FROM produtos  WHERE id = '$id' ";
+function atualizarProduto($conexao, $id, $nome ,$preco, $quantidade, $descricao, $fabID){
+    $sql = "UPDATE produtos SET nome  = '$nome', preco = $preco, quantidade = $quantidade, descricao = '$descricao', fabricante_id = $fabID WHERE id = $id";
     // UPDATE, DELECT INSERT não precisa de retorno pois nao retorna dado nenhum
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
@@ -50,7 +50,7 @@ function atualizarProduto($conexao, $id, $nome ,$preco, $quantidade, $descricao,
 
 //Inicio lerUmProduto
 function lerUmProduto($conexao, $id){
-    $sql = "SELECT id, nome, preco, quantidade, descricao, fabricante_id FROM produtos WHERE id = '$id'";
+    $sql = "SELECT id, nome, preco, quantidade, descricao, fabricante_id FROM produtos WHERE id = $id";
     
     $query = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
@@ -60,3 +60,14 @@ function lerUmProduto($conexao, $id){
 
 }
 // Fim lerUmProduto
+
+
+// Inicio função formata moeda
+function formataMoeda($valor){
+
+    return "R$ ".number_format($valor, 2,",",".");
+    // 5000.00 -> R$ 5.000,00
+}   
+
+
+// Fim função formata moeda

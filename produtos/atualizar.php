@@ -9,13 +9,13 @@
     if( isset($_POST ['atualizar'])){
         
         $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
-        $fabricanteID = filter_input(INPUT_POST, 'fabricante', FILTER_SANITIZE_NUMBER_INT);
+        $fabID = filter_input(INPUT_POST, 'fabricante', FILTER_SANITIZE_NUMBER_INT);
         $preco = filter_input(INPUT_POST,'preco', FILTER_SANITIZE_SPECIAL_CHARS);    
         $quantidade = filter_input(INPUT_POST,'quantidade', FILTER_SANITIZE_SPECIAL_CHARS);
         $descricao = filter_input(INPUT_POST,'descricao', FILTER_SANITIZE_SPECIAL_CHARS);
         
         
-        atualizarProduto($conexao,$id, $nome, $preco, $quantidade, $descricao, $fabricanteID);
+        atualizarProduto($conexao,$id, $nome, $preco, $quantidade, $descricao, $fabID);
 
         header("location:listar.php");
 
